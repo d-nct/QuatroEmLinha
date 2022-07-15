@@ -1,0 +1,7 @@
+# Para ignorar somente os arquivos sem extensão (binários)
+# ignore tudo
+*
+# exclua os subdiretórios
+!/**/
+# exclua os arquivos com extensão
+!*.*
