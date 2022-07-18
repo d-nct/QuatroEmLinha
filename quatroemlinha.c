@@ -1,10 +1,4 @@
-/* Essa implementação vai dar problema por causa da alocação estática: */
-/*   Teremos um byte para o  O  do jogador, mas pra imprimir, precisamos de muito */ 
-/*   mais que isso. */
-/* Solução: Guardar apenas back end do tabuleiro numa matriz 6 x 7, sem as */ 
-/*   linhas, divisorias etc */
-/*   Assim, na hora de imprimir linha a linha, simplesmente colocamos as cores sem */
-/*   medo de colocar mais bytes do que deviamos numa string. */
+/* Problema na função ganhou: ela verifica para todos os discos, mas, pela ordem, se uma "componente conexo" de discos da mesma cor não é vencedor, nenhum é, então não precisamos verificar em todos, apenas um. */
 
 #include <stdio.h>
 #include <string.h>
@@ -25,6 +19,8 @@
 #define NUM_COL 7
 
 void printtab(char tab[NUM_LIN][NUM_COL]);
+int ganhou(char tab[NUM_LIN][NUM_COL], char jogador); /* Retorna o bool se a cor ganhou */
+int verifica_seq_horizontal(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador); /* Retorna o tamanho da sequencia horizontal do jogador a partir das coordenadas i,j */
 
 int main(void) {
 	int i, j;
@@ -33,7 +29,7 @@ int main(void) {
 	/* inicializando */
 	for (i = 0; i < NUM_LIN; i++) {
 		for (j = 0; j < NUM_COL; j++) {
-			tab[i][j] = 'x';
+			tab[i][j] = 'v';
 		}
 	}
 
@@ -47,6 +43,8 @@ int main(void) {
 	tab[5][3] = 'a';
 
 	printtab(tab);
+
+	if (ganhou(tab, 'v')) printf("Vermelho ganhou!!!\n");
 
 
     return 0;
@@ -81,4 +79,43 @@ void printtab(char tab[NUM_LIN][NUM_COL]) {
 		printf(sep);
 	}
 	return;
+}
+
+
+void cls(void) {
+	printf("\033[2J\033[1;1H");
+}
+
+int verifica_seq_horizontal(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador) { /* Retorna o bool se a cor ganhou */
+	if (j == NUM_COL) return contador -1; /* Impedimos de acessar uma coluna que não existe */
+	/* se o disco da direita é da mesma cor, a seq cresce em 1 */
+	if (tab[i][j+1] == jogador) {
+		return verifica_seq_horizontal(tab, i, j+1, jogador, contador+1); /* caminhamos um para direita */
+	}
+	/* se o disco da direita é diferente, a seq para de crescer e retornamoss seu tamanho */
+	return contador -1;
+}
+
+int ganhou(char tab[NUM_LIN][NUM_COL], char jogador) { /* Retorna o bool se a cor ganhou */
+	int i, j;
+	int discos_em_seq;
+
+	for (i = 0; i < NUM_LIN; i++) {
+		for (j = 0; j < NUM_COL; j++) {
+			if (tab[i][j] == jogador) {
+				discos_em_seq = verifica_seq_horizontal(tab, i, j, jogador, 1);
+				/* printf("%d\n", discos_em_seq); */
+				if (discos_em_seq >= 4) return 1;
+
+				/*
+				discos_em_seq = verifica_seq_vertical(tab, i, j, jogador, 1);
+				if (discos_em_seq >= 4) return 1;
+				
+				discos_em_seq = verifica_seq_diagonal(tab, i, j, jogador, 1);
+				if (discos_em_seq >= 4) return 1;
+				*/
+			}
+		}
+	}
+	return 0;
 }
