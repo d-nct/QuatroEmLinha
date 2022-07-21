@@ -3,9 +3,7 @@ DEPS=quatroemlinha.h
 CFLAGS=-Wall -ansi -pedantic
 OUT=QuatroEmLinha
 
-# $(OUT): quatroemlinha.c
-# 	$(CC) -o $(OUT) quatroemlinha.c $(CFLAGS) 
-#
+# Compilando
 all: _execucao.o execucao.o interface.o tabuleiro.o
 	$(CC) -o $(OUT) main.c _execucao.o execucao.o interface.o tabuleiro.o $(CFLAGS) 
 
@@ -20,3 +18,10 @@ interface.o:
 
 tabuleiro.o:
 	$(CC) -c tabuleiro.c $(CFLAGS)
+
+# Limpeza
+clean:
+	rm -rf *.o
+
+mrproper: clean
+	rm -rf $(OUT)
