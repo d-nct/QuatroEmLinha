@@ -5,3 +5,6 @@
 !/**/
 # exclua os arquivos com extensão
 !*.*
+
+# Ignore objetos
+*.o
