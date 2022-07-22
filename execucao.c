@@ -35,16 +35,8 @@ int inserir_disco(char tab[NUM_LIN][NUM_COL], int coluna, char jogador) {
 	}
 }
 
-int jogada(char tab[NUM_LIN][NUM_COL], char jogador) {
-	int coluna;
 
-	printf("Jogador %c, deseja jogar seu disco em qual coluna? > ", jogador);
-	scanf("%d", &coluna);
-
-	return inserir_disco(tab, coluna, jogador);
-}
-
-int jogar(char tab[NUM_LIN][NUM_COL], char jogador_que_comeca) {
+int jogar(char tab[NUM_LIN][NUM_COL], char jogador_que_comeca, int modo) {
 	/* Retorna o numero de jogadas */
 	/* 		-1 se houve erro */
 	int num_jogada = 0; /* Não é usada pra nada mesmo, por enquanto */
@@ -52,7 +44,7 @@ int jogar(char tab[NUM_LIN][NUM_COL], char jogador_que_comeca) {
 	char jogador;
 
 	/* Definindo os jogadores: */
-	if (jogador_que_comeca == 'v' || jogador_que_comeca == 'a') { /* pq 'v' e 'a'? */
+	if (jogador_que_comeca == 'v' || jogador_que_comeca == 'a') {
 		jogador = jogador_que_comeca;
 	}
 	else {
@@ -60,9 +52,10 @@ int jogar(char tab[NUM_LIN][NUM_COL], char jogador_que_comeca) {
 		return -1;
 	}
 
+	/* Jogamos de fato */
 	printtab(tab);
 	do {
-		if ( !jogada(tab, jogador) ) { /* a jogada é feita */
+		if ( !jogada_player(tab, jogador) ) { /* a jogada é feita */
 			continue; /* Se a jogada é ilega, repetimos */
 		}
 

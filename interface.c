@@ -5,6 +5,14 @@
 /* Declaração das Funções que fazer a ponte Usuário - Processo */
 /* ----------------------------------------------------------- */
 
+void print_banner(void) {
+	printf("                           _  _                                          \n");
+	printf("                          | || |      ___ _ __ ___                       \n");
+	printf("                          | || |_    / _ \\ '_ ` _ \\    _______________   \n");
+	printf("                          |__   _|  |  __/ | | | | |  |_______________|  \n");
+	printf("                             |_|     \\___|_| |_| |_|                     \n\n");
+}
+
 void printtab(char tab[NUM_LIN][NUM_COL]) {
 	int i, j;
 
@@ -12,6 +20,7 @@ void printtab(char tab[NUM_LIN][NUM_COL]) {
 	const char sep[]     = "+---+---+---+---+---+---+---+\n";
 	
 	/* Construimos a parte de cima */
+	print_banner();
 	printf(legenda);
 	
 	/* E o resto, de acordo com o tab */

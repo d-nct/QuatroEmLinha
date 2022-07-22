@@ -1,3 +1,5 @@
+#include<stdlib.h>
+
 #define FOREVER while(1)
 
 #define FUNDO
@@ -21,9 +23,15 @@
 #define NUM_LIN 6
 #define NUM_COL 7
 
+#define ERRO_LEITURA printf("Ocorreu um erro de leitura. Tente novamente!\n"); exit(1);
+
+/* Tipos */
+typedef int bool;
+
 /* Protótipos */
 /* ---------- */
 void printtab(char tab[NUM_LIN][NUM_COL]);
+void print_banner(void);
 void cls(void);
 
 
@@ -37,4 +45,6 @@ int empatou(char tab[NUM_LIN][NUM_COL]);
 int inserir_disco(char tab[NUM_LIN][NUM_COL], int coluna, char jogador);
 int jogada_eh_legal(char tab[NUM_LIN][NUM_COL], char jogador, int i, int j);
 
-int jogar(char tab[NUM_LIN][NUM_COL], char jogador_que_comeca);
+int jogada_aleatoria(char tab[NUM_LIN][NUM_COL], char jogador);
+int jogada_player(char tab[NUM_LIN][NUM_COL], char jogador);
+int jogar(char tab[NUM_LIN][NUM_COL], char jogador_que_comeca, int modo);
