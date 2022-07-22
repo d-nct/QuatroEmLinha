@@ -19,7 +19,7 @@ int verifica_seq_horizontal(char tab[NUM_LIN][NUM_COL], int i, int j, char jogad
 
 int verifica_seq_vertical(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador)
 {
-	if (i == NUM_LIN) return contador;
+	if (i == NUM_LIN - 1) return contador;
 
 	if (tab[i + 1][j] == jogador)
 		return verifica_seq_vertical(tab, i + 1, j, jogador, contador + 1);
@@ -29,7 +29,7 @@ int verifica_seq_vertical(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador
 
 int verifica_seq_diagonal_direita(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador)
 {
-	if (i == NUM_LIN || j == NUM_COL) return contador;
+	if (i == (NUM_LIN - 1) || j == (NUM_COL - 1)) return contador;
 	
 	if (tab[i+1][j+1] == jogador)
 	{
@@ -41,7 +41,7 @@ int verifica_seq_diagonal_direita(char tab[NUM_LIN][NUM_COL], int i, int j, char
 
 int verifica_seq_diagonal_esquerda(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador)
 {
-	if (i == NUM_LIN || j == 0) return contador;
+	if (i == (NUM_LIN -1) || j == 0) return contador;
 
 	if (tab[i+1][j-1] == jogador)
 	{
@@ -53,6 +53,7 @@ int verifica_seq_diagonal_esquerda(char tab[NUM_LIN][NUM_COL], int i, int j, cha
 
 bool ganhou(char tab[NUM_LIN][NUM_COL], char jogador) 
 { /* Retorna o bool se a cor ganhou */
+/* TODO: Implementar destaque na tela quando ganhou retorna TRUE */
 	int i, j;
 	int discos_em_seq;
 
@@ -106,4 +107,119 @@ int empatou(char tab[NUM_LIN][NUM_COL]) {
 	}
 
 	return 1;
+}
+
+int _jogar_PvP(char tab[NUM_LIN][NUM_COL], char jogador, int modo) {
+	int num_jogada = 0; /* Não é usada pra nada mesmo, por enquanto */
+
+	do {
+		if ( !jogada_player(tab, jogador) ) { /* a jogada é feita */
+			continue; /* Se a jogada é ilega, repetimos */
+		}
+
+		cls(); /* Limpamos a tela */
+		printtab(tab);
+
+		if ( ganhou(tab, jogador) ) {
+			printf("Vitória do jogador %c! Parabéns!\n", jogador);
+			return num_jogada;
+		}
+
+		if ( empatou(tab) ) {
+			printf("Empate!! Fim de jogo!\n");
+			return num_jogada;
+		}
+
+		alterna_jogador(&jogador); num_jogada++;
+	} FOREVER;
+}
+
+int _jogar_PvC(char tab[NUM_LIN][NUM_COL], char jogador, int modo, int dificuldade) {
+	int num_jogada = 0; /* Não é usada pra nada mesmo, por enquanto */
+
+	/* Player é o vermelho! */
+	do {
+		if ( jogador == 'v' ) {
+			if ( !jogada_player(tab, jogador) ) { /* a jogada é feita */
+				continue; /* Se a jogada é ilega, repetimos */
+			}
+		}
+		else {
+			switch (dificuldade) {
+				/* Fácil */
+				case 1:
+					if ( !jogada_aleatoria(tab, jogador) ) { /* a jogada é feita */
+						continue; /* Se a jogada é ilega, repetimos */
+					} break;
+
+				/* Médio */
+				case 2:
+					if ( !jogada_razoavel(tab, jogador) ) { /* a jogada é feita */
+						continue; /* Se a jogada é ilega, repetimos */
+					} break;
+
+				/* Difícil */
+				/*case 3:
+					if ( !jogada_inteligente(tab, jogador) ) { 
+						continue; 
+					} break; */
+			}
+		}
+
+		cls(); /* Limpamos a tela */
+		printtab(tab);
+
+		if ( ganhou(tab, jogador) ) {
+			printf("Vitória do jogador %c! Parabéns!\n", jogador);
+			return num_jogada;
+		}
+
+		if ( empatou(tab) ) {
+			printf("Empate!! Fim de jogo!\n");
+			return num_jogada;
+		}
+
+		alterna_jogador(&jogador); num_jogada++;
+	} FOREVER;
+}
+
+int _jogar_CvC(char tab[NUM_LIN][NUM_COL], char jogador, int modo, int dificuldade) {
+	int num_jogada = 0; /* Não é usada pra nada mesmo, por enquanto */
+
+	do {
+		switch (dificuldade) {
+			/* Fácil */
+			case 1:
+				if ( !jogada_aleatoria(tab, jogador) ) { /* a jogada é feita */
+					continue; /* Se a jogada é ilega, repetimos */
+				} break;
+
+			/* Médio */
+			case 2:
+				if ( !jogada_razoavel(tab, jogador) ) { /* a jogada é feita */
+					continue; /* Se a jogada é ilega, repetimos */
+				} break;
+
+			/* Difícil */
+			/*case 3:
+				if ( !jogada_inteligente(tab, jogador) ) { 
+					continue; 
+				} break; */
+		}
+
+		cls(); /* Limpamos a tela */
+		printtab(tab);
+
+		if ( ganhou(tab, jogador) ) {
+			printf("Vitória do jogador %c! Parabéns!\n", jogador);
+			return num_jogada;
+		}
+
+		if ( empatou(tab) ) {
+			printf("Empate!! Fim de jogo!\n");
+			return num_jogada;
+		}
+
+		alterna_jogador(&jogador); num_jogada++;
+	} FOREVER;
 }

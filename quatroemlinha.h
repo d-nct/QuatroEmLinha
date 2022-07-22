@@ -1,6 +1,8 @@
 #include<stdlib.h>
 
 #define FOREVER while(1)
+#define VERBOSE 1
+#define SILENT 0
 
 #define LETRA
 
@@ -20,7 +22,7 @@
 #define VERMELHO      "\x1b[41m" " " RESET
 #define vermelho(TXT) "\x1b[41m" TXT RESET
 
-#define AMARELO       "\x1b[43m" "O" RESET
+#define AMARELO       "\x1b[43m" " " RESET
 #define amarelo(TXT)  "\x1b[43m" TXT RESET
 #endif
 
@@ -42,6 +44,7 @@ void cls(void);
 
 
 void preenche_tab(char tab[NUM_LIN][NUM_COL], char elemento);
+void copia_tab(char tab[NUM_LIN][NUM_COL], char tab_copia[NUM_LIN][NUM_COL]);
 void limpa_tab(char tab[NUM_LIN][NUM_COL]);
 
 int verifica_seq_horizontal(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador); /* Retorna o tamanho da sequencia horizontal do jogador a partir das coordenadas i,j */
@@ -51,9 +54,15 @@ int verifica_seq_diagonal_esquerda(char tab[NUM_LIN][NUM_COL], int i, int j, cha
 int ganhou(char tab[NUM_LIN][NUM_COL], char jogador); /* Retorna o bool se a cor ganhou */
 int empatou(char tab[NUM_LIN][NUM_COL]);
 
-int inserir_disco(char tab[NUM_LIN][NUM_COL], int coluna, char jogador);
+void alterna_jogador(char *jogador);
+int inserir_disco(char tab[NUM_LIN][NUM_COL], int coluna, char jogador, bool verbose);
 int jogada_eh_legal(char tab[NUM_LIN][NUM_COL], char jogador, int i, int j);
 
 int jogada_aleatoria(char tab[NUM_LIN][NUM_COL], char jogador);
+int jogada_razoavel(char tab[NUM_LIN][NUM_COL], char jogador);
+int coluna_de_jogada_ganhadora(char tab[NUM_LIN][NUM_COL], char jogador);
 int jogada_player(char tab[NUM_LIN][NUM_COL], char jogador);
-int jogar(char tab[NUM_LIN][NUM_COL], char jogador_que_comeca, int modo);
+int _jogar_CvC(char tab[NUM_LIN][NUM_COL], char jogador, int modo, int dificuldade);
+int _jogar_PvP(char tab[NUM_LIN][NUM_COL], char jogador, int modo);
+int _jogar_PvC(char tab[NUM_LIN][NUM_COL], char jogador, int modo, int dificuldade);
+int jogar(char tab[NUM_LIN][NUM_COL], char jogador_que_comeca, int modo, int dificuldade);

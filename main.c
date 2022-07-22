@@ -13,12 +13,11 @@ int main(void) {
 	char tab[NUM_LIN][NUM_COL];
 	int modo;
 	char jogador_que_comeca;
-
-	cls();
+	int dificuldade;
 
 	/* Menu */
 	do {
-		limpa_stdin();
+		cls();
 
 		print_banner();
 		puts("MENU");
@@ -37,6 +36,17 @@ int main(void) {
 			default: puts("Opção inválida, vamos tentar de novo!\n"); continue;
 		}
 
+		if (modo == 2 || modo == 3) {
+			puts("\n(1) Fácil");
+			puts("(2) Médio");
+			printf("Qual a dificuldade? \n > ");
+			if (!scanf("%d", &dificuldade)) {ERRO_LEITURA} limpa_stdin();
+			switch (dificuldade) {
+				case 1: case 2: case 3: break;
+				default: puts("Opção inválida, vamos tentar de novo!\n"); continue;
+			}
+		}
+
 		puts("\n(v) " vermelho("Vermelho"));
 		puts("(a) "   amarelo("Amarelo"));
 		printf("Qual jogador começa? \n > ");
@@ -52,14 +62,12 @@ int main(void) {
 		/* Começamos o jogo */
 		cls();
 		limpa_tab(tab);
-		jogar(tab, jogador_que_comeca, modo);
+		jogar(tab, jogador_que_comeca, modo, dificuldade);
 		printf("\n  Apita o árbitro: \n--- FIM DE JOGO ---\n\n");
 
 		/* Limpamos a tela e rodamos o ciclo mais uma vez */
 		puts("Aperte ENTER para voltar ao menu!"); 
-		/* scanf("%d", &modo);/1* TODO: getchar nn tava funfando *1/ */
-		fgetc(stdin);
-		cls();
+		limpa_stdin(); fgetc(stdin);
 	} FOREVER;
 
 	return 0;
