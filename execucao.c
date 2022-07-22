@@ -25,6 +25,7 @@ int inserir_disco(char tab[NUM_LIN][NUM_COL], int coluna, char jogador) {
 	}
 
 	/* Testamos se a jogada é legal */
+	/* não seria mais fácil simplesmente verificar se i é diferente de 0 aqui? */
 	if (jogada_eh_legal(tab, jogador, i, coluna)) {
 		tab[i][coluna] = jogador;
 		return 1;

@@ -17,7 +17,42 @@ int verifica_seq_horizontal(char tab[NUM_LIN][NUM_COL], int i, int j, char jogad
 	return contador;
 }
 
-int ganhou(char tab[NUM_LIN][NUM_COL], char jogador) { /* Retorna o bool se a cor ganhou */
+int verifica_seq_vertical(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador)
+{
+	if (i == NUM_LIN) return contador;
+
+	if (tab[i + 1][j] == jogador)
+		return verifica_seq_vertical(tab, i + 1, j, jogador, contador + 1);
+
+	return contador;
+}
+
+int verifica_seq_diagonal_direita(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador)
+{
+	if (i == NUM_LIN || j == NUM_COL) return contador;
+	
+	if (tab[i+1][j+1] == jogador)
+	{
+		return verifica_seq_diagonal_direita(tab, i+1, j+1, jogador, contador+1);
+	
+	}
+	return contador;
+}
+
+int verifica_seq_diagonal_esquerda(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador)
+{
+	if (i == NUM_LIN || j == 0) return contador;
+
+	if (tab[i+1][j-1] == jogador)
+	{
+		return verifica_seq_diagonal_esquerda(tab, i+1, j-1, jogador, contador+1);
+	}
+
+	return contador;
+}
+
+int ganhou(char tab[NUM_LIN][NUM_COL], char jogador) 
+{ /* Retorna o bool se a cor ganhou */
 	int i, j;
 	int discos_em_seq;
 
@@ -27,13 +62,14 @@ int ganhou(char tab[NUM_LIN][NUM_COL], char jogador) { /* Retorna o bool se a co
 				discos_em_seq = verifica_seq_horizontal(tab, i, j, jogador, 1);
 				if (discos_em_seq >= 4) return 1;
 
-				/*
 				discos_em_seq = verifica_seq_vertical(tab, i, j, jogador, 1);
 				if (discos_em_seq >= 4) return 1;
 				
-				discos_em_seq = verifica_seq_diagonal(tab, i, j, jogador, 1);
+				discos_em_seq = verifica_seq_diagonal_direita(tab, i, j, jogador, 1);
 				if (discos_em_seq >= 4) return 1;
-				*/
+
+				discos_em_seq = verifica_seq_diagonal_esquerda(tab, i, j, jogador, 1);
+				if (discos_em_seq >= 4) return 1;
 			}
 		}
 	}

@@ -39,6 +39,9 @@ void preenche_tab(char tab[NUM_LIN][NUM_COL], char elemento);
 void limpa_tab(char tab[NUM_LIN][NUM_COL]);
 
 int verifica_seq_horizontal(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador); /* Retorna o tamanho da sequencia horizontal do jogador a partir das coordenadas i,j */
+int verifica_seq_vertical(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador);
+int verifica_seq_diagonal_direita(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador);
+int verifica_seq_diagonal_esquerda(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador);
 int ganhou(char tab[NUM_LIN][NUM_COL], char jogador); /* Retorna o bool se a cor ganhou */
 int empatou(char tab[NUM_LIN][NUM_COL]);
 
