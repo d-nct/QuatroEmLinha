@@ -52,7 +52,7 @@ int jogar(char tab[NUM_LIN][NUM_COL], char jogador_que_comeca) {
 	char jogador;
 
 	/* Definindo os jogadores: */
-	if (jogador_que_comeca == 'v' || jogador_que_comeca == 'a') {
+	if (jogador_que_comeca == 'v' || jogador_que_comeca == 'a') { /* pq 'v' e 'a'? */
 		jogador = jogador_que_comeca;
 	}
 	else {
