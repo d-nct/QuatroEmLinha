@@ -2,20 +2,26 @@
 
 #define FOREVER while(1)
 
-#define FUNDO
+#define LETRA
 
 #define RESET    "\x1b[0m"
 
 /* Letra colorida */
 #ifdef LETRA
-#define VERMELHO "\x1b[31m" "O" RESET
-#define AMARELO  "\x1b[33m" "O" RESET
+#define VERMELHO      "\x1b[31m" "O" RESET
+#define vermelho(TXT) "\x1b[31m" TXT RESET
+
+#define AMARELO       "\x1b[33m" "O" RESET
+#define amarelo(TXT)  "\x1b[33m" TXT RESET
 #endif
 
 /* Background colorido */
 #ifdef FUNDO
-#define VERMELHO "\x1b[41m" " " RESET
-#define AMARELO  "\x1b[43m" " " RESET
+#define VERMELHO      "\x1b[41m" " " RESET
+#define vermelho(TXT) "\x1b[41m" TXT RESET
+
+#define AMARELO       "\x1b[43m" "O" RESET
+#define amarelo(TXT)  "\x1b[43m" TXT RESET
 #endif
 
 #define NUM_CR_LIN 29 +1

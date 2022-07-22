@@ -36,8 +36,8 @@ int main(void) {
 			default: puts("Opção inválida, vamos tentar de novo!\n"); continue;
 		}
 
-		puts("\n(v) \x1b[41mVermelho" RESET);
-		puts("(a) \x1b[43mAmarelo" RESET);
+		puts("\n(v) " vermelho("Vermelho"));
+		puts("(a) "   amarelo("Amarelo"));
 		printf("Qual jogador começa? \n > ");
 		if (!scanf("%c", &jogador_que_comeca)) {ERRO_LEITURA} limpa_stdin();
 		switch (jogador_que_comeca) {

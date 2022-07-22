@@ -51,7 +51,7 @@ int verifica_seq_diagonal_esquerda(char tab[NUM_LIN][NUM_COL], int i, int j, cha
 	return contador;
 }
 
-int ganhou(char tab[NUM_LIN][NUM_COL], char jogador) 
+bool ganhou(char tab[NUM_LIN][NUM_COL], char jogador) 
 { /* Retorna o bool se a cor ganhou */
 	int i, j;
 	int discos_em_seq;

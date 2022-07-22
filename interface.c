@@ -6,11 +6,15 @@
 /* ----------------------------------------------------------- */
 
 void print_banner(void) {
-	printf("                           _  _                                          \n");
-	printf("                          | || |      ___ _ __ ___                       \n");
-	printf("                          | || |_    / _ \\ '_ ` _ \\    _______________   \n");
-	printf("                          |__   _|  |  __/ | | | | |  |_______________|  \n");
-	printf("                             |_|     \\___|_| |_| |_|                     \n\n");
+	printf("                   _  _                                          \n");
+	printf("                  | || |      ___ _ __ ___                       \n");
+	printf("                  | || |_    / _ \\ '_ ` _ \\    _______________ \n");
+	printf("                  |__   _|  |  __/ | | | | |  |_______________|  \n");
+	printf("                     |_|     \\___|_| |_| |_|                    \n\n\n");
+}
+
+void centralizar(void) {
+	printf("                        ");
 }
 
 void printtab(char tab[NUM_LIN][NUM_COL]) {
@@ -21,10 +25,11 @@ void printtab(char tab[NUM_LIN][NUM_COL]) {
 	
 	/* Construimos a parte de cima */
 	print_banner();
-	printf(legenda);
+	centralizar(); printf(legenda);
 	
 	/* E o resto, de acordo com o tab */
 	for (i = 0; i < NUM_LIN; i++) {
+		centralizar();
 		/* linha com valores */
 		for (j = 0; j < NUM_COL; j++) {
 			switch (tab[i][j]) {
@@ -39,8 +44,9 @@ void printtab(char tab[NUM_LIN][NUM_COL]) {
 		printf("|\n");
 
 		/* separador */
-		printf(sep);
+		centralizar(); printf(sep);
 	}
+	printf("\n");
 	return;
 }
 
