@@ -55,24 +55,60 @@ int jogar(char tab[NUM_LIN][NUM_COL], char jogador_que_comeca, int modo) {
 
 	/* Jogamos de fato */
 	printtab(tab);
-	do {
-		if ( !jogada_player(tab, jogador) ) { /* a jogada é feita */
-			continue; /* Se a jogada é ilega, repetimos */
-		}
+	switch (modo) {
+		/* Player vs Player */
+		case 1: 
+			do {
+				if ( !jogada_player(tab, jogador) ) { /* a jogada é feita */
+					continue; /* Se a jogada é ilega, repetimos */
+				}
 
-		cls(); /* Limpamos a tela */
-		printtab(tab);
+				cls(); /* Limpamos a tela */
+				printtab(tab);
 
-		if ( ganhou(tab, jogador) ) {
-			printf("Vitória do jogador %c! Parabéns!\n", jogador);
-			return num_jogada;
-		}
+				if ( ganhou(tab, jogador) ) {
+					printf("Vitória do jogador %c! Parabéns!\n", jogador);
+					return num_jogada;
+				}
 
-		if ( empatou(tab) ) {
-			printf("Empate!! Fim de jogo!\n");
-			return num_jogada;
-		}
+				if ( empatou(tab) ) {
+					printf("Empate!! Fim de jogo!\n");
+					return num_jogada;
+				}
 
-		alterna_jogador(&jogador); num_jogada++;
-	} FOREVER;
+				alterna_jogador(&jogador); num_jogada++;
+			} FOREVER;
+
+		/* Player vs Computador */
+		case 2:
+			/* Player é o vermelho! */
+			do {
+				if ( jogador == 'v' ) {
+					if ( !jogada_player(tab, jogador) ) { /* a jogada é feita */
+						continue; /* Se a jogada é ilega, repetimos */
+					}
+				}
+				else {
+					if ( !jogada_aleatoria(tab, jogador) ) { /* a jogada é feita */
+						continue; /* Se a jogada é ilega, repetimos */
+					}
+				}
+
+				cls(); /* Limpamos a tela */
+				printtab(tab);
+
+				if ( ganhou(tab, jogador) ) {
+					printf("Vitória do jogador %c! Parabéns!\n", jogador);
+					return num_jogada;
+				}
+
+				if ( empatou(tab) ) {
+					printf("Empate!! Fim de jogo!\n");
+					return num_jogada;
+				}
+
+				alterna_jogador(&jogador); num_jogada++;
+			} FOREVER;
+	}
+	return 0;
 }

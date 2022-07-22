@@ -18,6 +18,7 @@ int main(void) {
 
 	/* Menu */
 	do {
+		limpa_stdin();
 
 		print_banner();
 		puts("MENU");
@@ -56,7 +57,8 @@ int main(void) {
 
 		/* Limpamos a tela e rodamos o ciclo mais uma vez */
 		puts("Aperte ENTER para voltar ao menu!"); 
-		scanf("%d", &modo);/* TODO: getchar nn tava funfando */
+		/* scanf("%d", &modo);/1* TODO: getchar nn tava funfando *1/ */
+		fgetc(stdin);
 		cls();
 	} FOREVER;
 
