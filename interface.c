@@ -85,14 +85,14 @@ void regras_do_jogo(void)
 {
 	cls();
 	print_banner();
-	
+
 	printf("\n");
 	puts("******************************************************");
 	puts("**************** REGRAS DO JOGO **********************");
 	puts("******************************************************");
 	printf("\n");
 
-	puts(" 1- Permitido apenas 2 jogadores: Amarelo & Vermelho;");
+	puts(" 1- Permitido apenas 2 jogadores: " amarelo("Amarelo") " & " vermelho("Vermelho") ";");
 	puts(" 2- O jogador amarelo sempre começa;");
 	puts(" 3- Ao todo são 21 fichas por jogador;");
 	puts(" 4- Cada jogador tem direito a uma jogada por turno;");
