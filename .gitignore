@@ -5,6 +5,8 @@
 !/**/
 # exclua os arquivos com extensão
 !*.*
+# exclua Makefile
+!Makefile
 
 # Ignore objetos
 *.o
