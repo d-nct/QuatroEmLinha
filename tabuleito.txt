@@ -16,3 +16,28 @@
 +---+---+---+---+---+---+---+
 |   |   |   |   |   |   |   |
 +---+---+---+---+---+---+---+
+
+CC=gcc
+SRC= $(widlcard *.c)
+OBJ= $(SRC:.c=.o)
+DEPS=quatroemlinha.h
+CFLAGS=-Wall -ansi -pedantic
+OUT=QuatroEmLinha
+
+# Compilando
+all: QuatroEmLinha
+
+QuatroEmLinha: $(OBJ)
+  $(CC) -o $(OUT) $@ $^
+
+%.o: %c $(DEPS)
+  $(CC) -o $@ -c $< $(CFLAGS)
+
+# Limpeza
+.PHONY:
+clean:
+	rm -rf *.o
+
+mrproper: clean
+	rm -rf $(OUT)
+

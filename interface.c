@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "quatroemlinha.h"
 
 /* Declaração das Funções que fazer a ponte Usuário - Processo */
@@ -54,3 +55,27 @@ void printtab(char tab[NUM_LIN][NUM_COL]) {
 void cls(void) {
 	printf("\033[2J\033[1;1H");
 }
+
+char* jogador_to_txt (char jogador) {
+	char *texto;
+
+	texto = malloc( 8 * sizeof(char) );
+
+	jogador == 'v' ? strcpy(texto, vermelho("vermelho") ) : strcpy(texto, amarelo("amarelo") );
+
+	return texto;
+}
+
+void print_menu(void)
+	{
+		cls();
+		print_banner();
+		puts("MENU");
+		puts("----\n");
+
+		/* Obtemos as informações necessárias para começar */
+		puts("(1) Player     vs Player");
+		puts("(2) Player     vs Computador");
+		puts("(3) Computador vs Computador");
+		puts("(0) Sair");
+	}
