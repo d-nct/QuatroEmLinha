@@ -83,14 +83,12 @@ int jogada_eh_legal(char tab[NUM_LIN][NUM_COL], char jogador, int i, int j) {
 		return 0;
 
 	/* Se a coordenada já possui um disco, a jogada é ilegal */
-	if (tab[i][j] != 'x') 
+	if (tab[i][j] != VAZIO) 
 		return 0;
 
 	/* Se passou nos teste, é legal */
 	return 1;
 }
-
-
 
 int empatou(char tab[NUM_LIN][NUM_COL]) {
 	/* Retorna 1 se todas as casas estão ocupadas */
@@ -99,7 +97,7 @@ int empatou(char tab[NUM_LIN][NUM_COL]) {
 
 	for (i = 0; i < NUM_LIN; i++) {
 		for (j = 0; j < NUM_COL; j++) {
-			if (tab[i][j] == 'x') return 0;
+			if (tab[i][j] == VAZIO) return 0;
 		}
 	}
 
@@ -108,8 +106,11 @@ int empatou(char tab[NUM_LIN][NUM_COL]) {
 
 int _jogar_PvP(char tab[NUM_LIN][NUM_COL], char jogador) {
 	int num_jogada = 0; /* Não é usada pra nada mesmo, por enquanto */
+	char *txt_jogador;  /* Ponteiro temporário apenas para poder desalocar memória depois */
 
 	cls(); /* Limpamos a tela */
+	printtab(tab); /* Imprimimos o tabuleiro */
+
 	do {
 		if ( !jogada_player(tab, jogador) ) { /* a jogada é feita */
 			continue; /* Se a jogada é ilega, repetimos */
@@ -119,7 +120,10 @@ int _jogar_PvP(char tab[NUM_LIN][NUM_COL], char jogador) {
 		printtab(tab);
 
 		if ( ganhou(tab, jogador) ) {
-			printf("Vitória do jogador %c! Parabéns!\n", jogador);
+			txt_jogador = jogador_to_txt(jogador);
+			printf("Vitória do jogador %s! Parabéns!\n", txt_jogador);
+			free(txt_jogador);
+
 			return num_jogada;
 		}
 
@@ -134,7 +138,7 @@ int _jogar_PvP(char tab[NUM_LIN][NUM_COL], char jogador) {
 
 int _jogar_PvC(char tab[NUM_LIN][NUM_COL], char jogador, int dificuldade, bool cerumano_inicia) {
 	int num_jogada = 0; /* Não é usada pra nada mesmo, por enquanto */
-	
+	char *txt_jogador;  /* Ponteiro temporário apenas para poder desalocar memória depois */
 
 	/* Se o jogador é o cerúmico, fazemos uma jogada extra antes de tudo */
 	if (cerumano_inicia)
@@ -144,50 +148,64 @@ int _jogar_PvC(char tab[NUM_LIN][NUM_COL], char jogador, int dificuldade, bool c
 		while (!jogada_player(tab, jogador));
 			/* a jogada é feita */
 			/* Se a jogada é ilega, repetimos */
-		alterna_jogador(&jogador); num_jogada++;
 	}
 
 	do
 	{
 		/* Jogada do Computador */
-		switch (dificuldade)
-		{
-		case 1:
-			cls(); /* Limpamos a tela */
-			printtab(tab);
-			if (!jogada_aleatoria(tab, jogador))
-			{			  /* a jogada é feita */
-				continue; /* Se a jogada é ilega, repetimos */
-			}
-			alterna_jogador(&jogador); num_jogada++;
-			break;
-
-		case 2:
-			cls(); /* Limpamos a tela */
-			printtab(tab);
-			if (!jogada_razoavel(tab, jogador))
-			{			  /* a jogada é feita */
-				continue; /* Se a jogada é ilega, repetimos */
-			}
-			alterna_jogador(&jogador); num_jogada++;
-			break;
-		}
-		
-		/* Jogada do Cerumano */
+		alterna_jogador(&jogador); num_jogada++;
 		cls(); /* Limpamos a tela */
 		printtab(tab);
-		while (!jogada_player(tab, jogador)); /* a jogada é feita */
-											/* Se a jogada é ilega, repetimos */
-		alterna_jogador(&jogador); num_jogada++;
+		switch (dificuldade)
+		{
+		case 1: /* Médio */
+			if (!jogada_aleatoria(tab, jogador)) continue; /* Se a jogada é ilegal, repetimos */
+			break;
+
+		case 2: /* Difícil */
+			if (!jogada_razoavel(tab, jogador)) continue; /* Se a jogada é ilegal, repetimos */
+			break;
+		}
 
 		/* Verificacoes */
 		if ( ganhou(tab, jogador) ) {
-			printf("Vitória do jogador %c! Parabéns!\n", jogador);
+			cls();
+			printtab(tab);
+			txt_jogador = jogador_to_txt(jogador);
+			printf("Vitória do jogador %s! Parabéns!\n", txt_jogador);
+			free(txt_jogador);
+
 			return num_jogada;
 		}
 
 		if ( empatou(tab) ) {
 			printf("Empate!! Fim de jogo!\n");
+			return num_jogada;
+		}
+		
+		/* Jogada do Cerumano */
+		alterna_jogador(&jogador); num_jogada++;
+		cls(); /* Limpamos a tela */
+		printtab(tab);
+		waitFor(1); /* Mostramos a jogada do Computador por 1 segundo */	
+
+		while (!jogada_player(tab, jogador)); /* a jogada é feita */
+											/* Se a jogada é ilega, repetimos */
+
+		/* Verificacoes */
+		if ( ganhou(tab, jogador) ) {
+			cls();
+			printtab(tab);
+			txt_jogador = jogador_to_txt(jogador);
+			printf("Vitória do jogador %s! Parabéns!\n", txt_jogador);
+			free(txt_jogador);
+
+			return num_jogada;
+		}
+
+		if ( empatou(tab) ) {
+			printf("Empate!! Fim de jogo!\n");
+
 			return num_jogada;
 		}
 	} FOREVER;
@@ -196,8 +214,9 @@ int _jogar_PvC(char tab[NUM_LIN][NUM_COL], char jogador, int dificuldade, bool c
 int _jogar_CvC(char tab[NUM_LIN][NUM_COL], char jogador, int dificuldade) {
 	char *txt_jogador;  /* Ponteiro temporário apenas para poder desalocar memória depois */
 	int num_jogada = 0; /* Não é usada pra nada mesmo, por enquanto */
-
+	
 	do {
+		/* Fazemos a jogada */
 		switch (dificuldade) {
 			/* Médio */
 			case 1:
@@ -214,6 +233,7 @@ int _jogar_CvC(char tab[NUM_LIN][NUM_COL], char jogador, int dificuldade) {
 
 		cls(); /* Limpamos a tela */
 		printtab(tab);
+		waitFor(1); /* Mostramos a jogada do Computador por 1 segundo */	
 
 		if ( ganhou(tab, jogador) ) {
 			txt_jogador = jogador_to_txt(jogador);

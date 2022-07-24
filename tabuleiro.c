@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <string.h>
 #include "quatroemlinha.h"
 
 /* Funções para manipular o tabuleiro */
@@ -16,5 +14,5 @@ void preenche_tab(char tab[NUM_LIN][NUM_COL], char elemento) {
 }
 
 void limpa_tab(char tab[NUM_LIN][NUM_COL]) {
-	preenche_tab(tab, 'x');
+	preenche_tab(tab, VAZIO);
 }

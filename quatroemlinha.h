@@ -7,10 +7,12 @@
 #define VERBOSE 1
 #define SILENT 0
 #define jogador_que_comeca 'a'
+#define VAZIO 'x'
 
+/* CORES */
 #define LETRA
 
-#define RESET    "\x1b[0m"
+#define RESET        "\x1b[0m"
 
 /* Letra colorida */
 #ifdef LETRA
@@ -30,12 +32,17 @@
 #define amarelo(TXT)  "\x1b[43m" TXT RESET
 #endif
 
+#define DESTAQUE(TXT) "\x1b[47m" TXT RESET
+
+/* Números */
+
 #define NUM_CR_LIN 29 +1
 
 #define NUM_LIN 6
 #define NUM_COL 7
 
-#define ERRO_LEITURA printf("Ocorreu um erro de leitura. Tente novamente!\n"); exit(1);
+#define ERRO_LEITURA  printf("Ocorreu um erro de leitura. Tente novamente!\n"); exit(1);
+#define ERRO_ALOCACAO printf("Ocorreu um erro ao alocar memória. Tente novamente!\n"); exit(1);
 
 /* Tipos */
 typedef int bool;
@@ -49,6 +56,8 @@ void print_banner(void);
 char *jogador_to_txt (char jogador);
 void cls(void);
 void print_menu(void);
+void regras_do_jogo(void);
+
 
 /* interface.c */
 void preenche_tab(char tab[NUM_LIN][NUM_COL], char elemento);

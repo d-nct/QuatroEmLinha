@@ -8,12 +8,13 @@ int main(void) {
 	int dificuldade;
 	bool cerumano_inicia, sair;
 
-	/* Menu */
+	srand(time(NULL));
 
 	do {
+		/* Menu */
 		print_menu();
 		
-		modo = get_int(0, 3, "Insira o modo de jogo: ");
+		modo = get_int(0, 4, "Insira o modo de jogo: ");
 		limpa_tab(tab);
 
 		/*começamos o jogo*/
@@ -31,7 +32,7 @@ int main(void) {
 				
 				puts("Dificuldades disponíveis para o Computador:");
 				puts("(1) Fácil");
-				puts("(2) Médio \n");
+				puts("(2) Difícil \n");
 			    dificuldade = get_int(1, 2, "Insira a dificuldade: ");
 
 				_jogar_PvC(tab, jogador_que_comeca, dificuldade, cerumano_inicia);
@@ -40,11 +41,17 @@ int main(void) {
 			case 3: /* Computador vs Computador */
 				puts("\nDificuldades disponíveis para o Computador:");
 				puts("(1) Fácil ");
-				puts("(2) Médio \n");
+				puts("(2) Difícil \n");
 				
 				dificuldade = get_int(1, 2, "Insira a dificuldade: ");
 				_jogar_CvC(tab, jogador_que_comeca, dificuldade);
 				break;
+
+			case 4: 
+				regras_do_jogo();
+				printf("\nAperte ENTER para voltar ao menu!\n");
+				input_flush();
+				continue;
 
 			case 0:
 				puts("\nDeseja realmente sair?");

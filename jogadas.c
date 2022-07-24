@@ -62,17 +62,6 @@ int coluna_de_jogada_ganhadora(char tab[NUM_LIN][NUM_COL], char jogador)
 }
 
 int jogada_aleatoria(char tab[NUM_LIN][NUM_COL], char jogador) {
-	#ifdef DEBUG
-	int x, i;
-	#endif
-	srand(time(NULL));
-	waitFor(1);
-	#ifdef DEBUG
-	for (i = 0; i < 7; i++) {
-		x = rand() % NUM_COL;
-		printf("rand = %i\n", x);
-	}
-	#endif
 	return inserir_disco(tab, rand() % NUM_COL, jogador, SILENT);
 }
 
