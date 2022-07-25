@@ -1,14 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <time.h>
 #include "quatroemlinha.h"
-
-void waitFor (unsigned int secs) {
-	/* Fonte: https://stackoverflow.com/questions/3930363/implement-time-delay-in-c */
-    unsigned int retTime = time(0) + secs;   /* Get finishing time. */
-    while (time(0) < retTime);               /* Loop until it arrives. */
-}
 
 int jogada_razoavel(char tab[NUM_LIN][NUM_COL], char jogador) {
 	int ret;
@@ -72,25 +62,17 @@ int coluna_de_jogada_ganhadora(char tab[NUM_LIN][NUM_COL], char jogador)
 }
 
 int jogada_aleatoria(char tab[NUM_LIN][NUM_COL], char jogador) {
-	#ifdef DEBUG
-	int x, i;
-	#endif
-	srand(time(NULL));
-	waitFor(1);
-	#ifdef DEBUG
-	for (i = 0; i < 7; i++) {
-		x = rand() % NUM_COL;
-		printf("rand = %i\n", x);
-	}
-	#endif
 	return inserir_disco(tab, rand() % NUM_COL, jogador, SILENT);
 }
 
 int jogada_player(char tab[NUM_LIN][NUM_COL], char jogador) {
 	int coluna;
+	char *txt_jogador;
 
-	printf("Jogador %c, deseja jogar seu disco em qual coluna? > ", jogador);
-	scanf("%d", &coluna);
+	txt_jogador = jogador_to_txt(jogador);
+	printf("Jogador %s, deseja jogar seu disco em qual coluna?", txt_jogador);
+	coluna = get_int(0, NUM_COL - 1, " > ");
+	free(txt_jogador);
 
 	return inserir_disco(tab, coluna, jogador, VERBOSE);
 }
