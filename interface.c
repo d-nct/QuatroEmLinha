@@ -25,7 +25,7 @@ void cls(void) {
 char* jogador_to_txt (char jogador) {
 	char *texto;
 
-	texto = malloc( 8 * sizeof(char) );
+	texto = malloc( 18 * sizeof(char) ); /* 18 bytes para conseguir alocar os caracteres de mudança de cor */
 	if (texto == NULL) {ERRO_ALOCACAO}
 
 	jogador == 'v' ? strcpy(texto, vermelho("vermelho") ) : strcpy(texto, amarelo("amarelo") );

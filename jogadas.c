@@ -1,37 +1,34 @@
 #include "quatroemlinha.h"
 
 int jogada_razoavel(char tab[NUM_LIN][NUM_COL], char jogador) {
-	int ret;
-
 	int jogada_ganhadora, jogada_perdedora;
 	char outro = jogador; alterna_jogador(&outro);
 	
 	/* Se possível, ganhamos o jogo */
 	jogada_ganhadora = coluna_de_jogada_ganhadora(tab, jogador);
-	if (jogada_ganhadora != -1) {
+	if (jogada_ganhadora != FORA_DO_TAB) {
 		#ifdef DEBUG
 		printf("Entramos em Jogada Ganhadora\n");
 		#endif
-		ret = inserir_disco(tab, jogada_ganhadora, jogador, SILENT);
-		return ret;
+
+		return inserir_disco(tab, jogada_ganhadora, jogador, SILENT);
 	}
 
 	/* Se não, evitamos perder */
 	jogada_perdedora = coluna_de_jogada_ganhadora(tab, outro);
-	if (jogada_perdedora != -1) {
+	if (jogada_perdedora != FORA_DO_TAB) {
 		#ifdef DEBUG
 		printf("Entramos em Jogada Perdedora\n");
 		#endif
-		ret = inserir_disco(tab, jogada_perdedora, jogador, SILENT);
-		return ret;
+
+		return inserir_disco(tab, jogada_perdedora, jogador, SILENT);
 	}
 
 	/* Se não pudermos ganhar E não estivermos em perigo, escolhemos uma coluna aleatória */
 	#ifdef DEBUG
 	printf("Jogada Aleatoria\n");
 	#endif
-	ret = jogada_aleatoria(tab, jogador);
-	return ret;
+	return jogada_aleatoria(tab, jogador);
 }
 
 void copia_tab(char tab[NUM_LIN][NUM_COL], char tab_copia[NUM_LIN][NUM_COL]) {
@@ -58,7 +55,7 @@ int coluna_de_jogada_ganhadora(char tab[NUM_LIN][NUM_COL], char jogador)
 		}
 		copia_tab(tab, tab2);
 	}
-	return -1;
+	return FORA_DO_TAB;
 }
 
 int jogada_aleatoria(char tab[NUM_LIN][NUM_COL], char jogador) {

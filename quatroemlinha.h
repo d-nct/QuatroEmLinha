@@ -8,6 +8,7 @@
 #define SILENT 0
 #define jogador_que_comeca 'a'
 #define VAZIO 'x'
+#define FORA_DO_TAB -1
 
 /* CORES */
 #define LETRA
@@ -59,11 +60,11 @@ void print_menu(void);
 void regras_do_jogo(void);
 
 
-/* interface.c */
+/* tabuleiro.c */
 void preenche_tab(char tab[NUM_LIN][NUM_COL], char elemento);
 void limpa_tab(char tab[NUM_LIN][NUM_COL]);
 
-/* execucao.c */
+/* _execucao.c */
 void waitFor (unsigned int segundos);
 int verifica_seq_horizontal(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador); /* Retorna o tamanho da sequencia horizontal do jogador a partir das coordenadas i,j */
 int verifica_seq_vertical(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador);
@@ -71,21 +72,21 @@ int verifica_seq_diagonal_direita(char tab[NUM_LIN][NUM_COL], int i, int j, char
 int verifica_seq_diagonal_esquerda(char tab[NUM_LIN][NUM_COL], int i, int j, char jogador, int contador);
 int ganhou(char tab[NUM_LIN][NUM_COL], char jogador); /* Retorna o bool se a cor ganhou */
 int empatou(char tab[NUM_LIN][NUM_COL]);
+int jogada_eh_legal(char tab[NUM_LIN][NUM_COL], char jogador, int i, int j);
+int _jogar_CvC(char tab[NUM_LIN][NUM_COL], char jogador, int dificuldade);
+int _jogar_PvP(char tab[NUM_LIN][NUM_COL], char jogador);
+int _jogar_PvC(char tab[NUM_LIN][NUM_COL], char jogador, int dificuldade, bool cerumano_inicia);
 
+/* execucao.c */
 void alterna_jogador(char *jogador);
 int inserir_disco(char tab[NUM_LIN][NUM_COL], int coluna, char jogador, bool verbose);
-int jogada_eh_legal(char tab[NUM_LIN][NUM_COL], char jogador, int i, int j);
 
 /* jogadas.c */
 void copia_tab(char tab[NUM_LIN][NUM_COL], char tab_copia[NUM_LIN][NUM_COL]);
-
 int coluna_de_jogada_ganhadora(char tab[NUM_LIN][NUM_COL], char jogador);
 int jogada_aleatoria(char tab[NUM_LIN][NUM_COL], char jogador);
 int jogada_razoavel(char tab[NUM_LIN][NUM_COL], char jogador);
 int jogada_player(char tab[NUM_LIN][NUM_COL], char jogador);
-int _jogar_CvC(char tab[NUM_LIN][NUM_COL], char jogador, int dificuldade);
-int _jogar_PvP(char tab[NUM_LIN][NUM_COL], char jogador);
-int _jogar_PvC(char tab[NUM_LIN][NUM_COL], char jogador, int dificuldade, bool cerumano_inicia);
 
 /* utils.c */
 void input_flush();
